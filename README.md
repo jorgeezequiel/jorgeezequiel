@@ -53,7 +53,7 @@ Estas estatísticas animadas agregam dados de linguagens de repositórios públi
 
 <!-- PROFILE-STATS:START -->
 
-![Premium static language breakdown with percentages and repository count](assets/language-breakdown.svg)
+![Language breakdown with percentages and repository count](assets/language-breakdown.svg)
 <!-- PROFILE-STATS:END -->
 
 <div align="center">
