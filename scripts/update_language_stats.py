@@ -15,8 +15,10 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
+from io import BytesIO
 from pathlib import Path
 
+import cairosvg
 from PIL import Image, ImageDraw, ImageFont
 
 OWNER = os.environ.get("GITHUB_OWNER", "jorgeezequiel")
@@ -188,20 +190,39 @@ def render_gif(totals, output_path: Path):
     small_font = load_font(13)
     tiny_font = load_font(12)
     badge_font = load_font(11, True)
-    badge_styles = {
-        "python": ("Py", (55, 118, 171)), "javascript": ("JS", (240, 219, 79)),
-        "typescript": ("TS", (49, 120, 198)), "java": ("J", (237, 90, 45)),
-        "kotlin": ("Kt", (166, 99, 230)), "dart": ("D", (0, 180, 190)),
-        "c++": ("C++", (0, 89, 156)), "c": ("C", (85, 130, 190)),
-        "c#": ("C#", (104, 33, 122)), "go": ("Go", (0, 173, 216)),
-        "rust": ("Rs", (183, 65, 14)), "swift": ("Sw", (240, 81, 56)),
-        "php": ("PHP", (119, 123, 180)), "ruby": ("Rb", (204, 52, 45)),
-        "html": ("5", (228, 77, 38)), "html5": ("5", (228, 77, 38)),
-        "css": ("3", (21, 114, 182)), "css3": ("3", (21, 114, 182)),
-        "shell": ("$>", (75, 85, 99)), "bash": ("$>", (75, 85, 99)),
-        "jupyter notebook": ("Jp", (243, 119, 54)), "makefile": ("Mk", (110, 118, 129)),
-        "other": ("...", (100, 116, 139)),
+    icon_files = {
+        "python": "python.svg", "javascript": "javascript.svg",
+        "typescript": "typescript.svg", "java": "java.svg",
+        "kotlin": "kotlin.svg", "dart": "dart.svg",
+        "c++": "cpp.svg", "cpp": "cpp.svg", "c": "c.svg",
+        "c#": "csharp.svg", "csharp": "csharp.svg", "go": "go.svg",
+        "rust": "rust.svg", "swift": "swift.svg", "php": "php.svg",
+        "ruby": "ruby.svg", "html": "html5.svg", "html5": "html5.svg",
+        "css": "css3.svg", "css3": "css3.svg", "shell": "bash.svg",
+        "bash": "bash.svg", "jupyter notebook": "jupyter.svg",
+        "lua": "lua.svg", "powershell": "powershell.svg",
+        "gdscript": "gdscript.svg",
     }
+    icon_dir = ASSETS / "language-icons"
+    icon_cache = {}
+
+    def language_icon(name: str):
+        """Rasterize a repository-local SVG logo; no runtime network requests."""
+        key = str(name).strip().lower()
+        filename = icon_files.get(key)
+        if not filename:
+            return None
+        path = icon_dir / filename
+        if not path.is_file():
+            raise RuntimeError(f"Configured language icon is missing: {filename}")
+        if key not in icon_cache:
+            png_bytes = cairosvg.svg2png(url=str(path), output_width=64)
+            with Image.open(BytesIO(png_bytes)) as decoded:
+                icon_cache[key] = decoded.convert("RGBA")
+        icon = icon_cache[key].copy()
+        icon.thumbnail((20, 20), Image.Resampling.LANCZOS)
+        return icon
+
     frames = []
 
     for frame in range(24):
@@ -246,16 +267,21 @@ def render_gif(totals, output_path: Path):
         for index, (name, value) in enumerate(ranked):
             y = 185 + index * 38
             color = palette[index % len(palette)]
-            badge_label, badge_color = badge_styles.get(
-                str(name).lower(), (str(name)[:3].upper(), color)
-            )
-            draw.rounded_rectangle((370, y - 1, 398, y + 21), radius=6,
-                                   fill=badge_color)
-            badge_ink = (20, 25, 35) if str(name).lower() in {
-                "javascript", "dart", "makefile"
-            } else (248, 250, 252)
-            draw.text((384, y + 10), badge_label, font=badge_font,
-                      fill=badge_ink, anchor="mm")
+            icon = language_icon(str(name))
+            if icon is not None:
+                # Center the real logo in a consistent badge without distortion.
+                draw.rounded_rectangle((370, y - 1, 398, y + 21), radius=6,
+                                       fill=(20, 32, 51))
+                icon_x = 384 - icon.width // 2
+                icon_y = y + 10 - icon.height // 2
+                image.paste(icon, (icon_x, icon_y), icon)
+            else:
+                # Keep unknown languages visible with a readable text fallback.
+                fallback = str(name)[:3].upper()
+                draw.rounded_rectangle((370, y - 1, 398, y + 21), radius=6,
+                                       fill=color)
+                draw.text((384, y + 10), fallback, font=badge_font,
+                          fill=(248, 250, 252), anchor="mm")
             draw.text((408, y), name, font=body_font, fill=(226, 232, 240))
             pct = value / total_bytes * 100
             draw.text((930, y), f"{pct:.1f}%", font=body_font,
