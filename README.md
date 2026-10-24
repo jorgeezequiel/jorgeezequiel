@@ -1,45 +1,35 @@
-# Jorge Ezequiel 👋
+# Jorge Ezequiel
 
-**Software Development | Open Source | Building Practical Tools**
+**Software developer · Open source · Practical tools**
 
-I build software projects focused on solving practical problems, improving workflows, and creating maintainable solutions.
+Building useful, maintainable software with a focus on offline-first workflows, privacy, and tools that solve real problems.
 
-I enjoy exploring different technologies, developing reusable tools, and sharing projects through open-source collaboration.
+Desenvolvedor de software com foco em ferramentas úteis e fáceis de manter, fluxos offline-first, privacidade e soluções para problemas reais.
 
-## 🚀 Featured Project
-
-### [Poliglota](https://github.com/jorgeezequiel/poliglota)
-
-An open-source toolkit for validating and synchronizing localization files, with an extensible architecture designed to support future offline translation capabilities.
-
-## 📊 Programming Languages
-
-The chart below summarizes languages detected in eligible public software repositories. It is refreshed automatically every day and can also be updated manually.
-
-![Programming languages across eligible public repositories](assets/language-stats.gif)
-
----
-
-# Jorge Ezequiel 👋
-
-**Desenvolvimento de Software | Código Aberto | Ferramentas Práticas**
-
-Desenvolvo projetos de software voltados à resolução de problemas práticos, à melhoria de fluxos de trabalho e à criação de soluções fáceis de manter.
-
-Gosto de explorar diferentes tecnologias, desenvolver ferramentas reutilizáveis e compartilhar projetos por meio da colaboração em código aberto.
-
-## 🚀 Projeto em destaque
+## Featured project · Projeto em destaque
 
 ### [Poliglota](https://github.com/jorgeezequiel/poliglota)
 
-Uma ferramenta de código aberto para validar e sincronizar arquivos de localização, com uma arquitetura extensível preparada para receber recursos futuros de tradução offline.
+**Offline localization toolkit · Ferramenta offline para localização**
 
-## 📊 Linguagens de programação
+A reusable toolkit for validating and synchronizing localization files, designed to reduce repetitive translation work and support offline translation engines.
 
-O gráfico abaixo resume as linguagens detectadas nos repositórios públicos de software elegíveis. Ele é atualizado automaticamente todos os dias e também pode ser atualizado manualmente.
+Ferramenta reutilizável para validar e sincronizar arquivos de localização, reduzir trabalho repetitivo de tradução e permitir motores de tradução offline.
 
-![Linguagens de programação nos repositórios públicos elegíveis](assets/language-stats.gif)
+## Language statistics · Estatísticas de linguagens
+
+The animated chart and table summarize language data from eligible **public software repositories only**. Private repositories, repository names, URLs, descriptions, and per-repository data are never published.
+
+O gráfico animado e a tabela resumem dados de linguagens apenas de **repositórios públicos de software elegíveis**. Repositórios privados, nomes, URLs, descrições e dados individuais de repositórios nunca são publicados.
+
+![Language statistics preview](assets/language-stats.svg)
 
 <!-- PROFILE-STATS:START -->
-Language statistics will appear here after the first successful workflow run.
+
+Statistics will appear after the first successful workflow run.
+
+As estatísticas aparecerão após a primeira execução bem-sucedida do workflow.
+
 <!-- PROFILE-STATS:END -->
+
+<sub>Updated daily by GitHub Actions · Atualizado diariamente pelo GitHub Actions. Manual execution is also available · Também pode ser executado manualmente.</sub>

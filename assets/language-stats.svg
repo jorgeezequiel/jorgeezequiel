@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="260" viewBox="0 0 960 260" role="img" aria-labelledby="title desc">
+<title id="title">Programming language statistics preview</title>
+<desc id="desc">Placeholder until GitHub Actions generates aggregate language statistics from eligible public repositories.</desc>
+<rect width="960" height="260" rx="18" fill="#0f172a"/>
+<text x="36" y="52" fill="#f8fafc" font-family="Arial,sans-serif" font-size="26" font-weight="700">Programming Languages</text>
+<text x="38" y="82" fill="#94a3b8" font-family="Arial,sans-serif" font-size="15">Aggregate public repository statistics</text>
+<rect x="38" y="112" width="884" height="26" rx="9" fill="#334155"/>
+<rect x="38" y="112" width="140" height="26" rx="8" fill="#6366f1"/>
+<rect x="178" y="112" width="112" height="26" fill="#14b8a6"/>
+<rect x="290" y="112" width="98" height="26" fill="#f59e0b"/>
+<rect x="388" y="112" width="88" height="26" fill="#ec4899"/>
+<rect x="476" y="112" width="78" height="26" fill="#8b5cf6"/>
+<rect x="554" y="112" width="70" height="26" fill="#22c55e"/>
+<rect x="624" y="112" width="298" height="26" rx="8" fill="#475569"/>
+<text x="38" y="182" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="18">Waiting for the first successful workflow run…</text>
+<text x="38" y="215" fill="#94a3b8" font-family="Arial,sans-serif" font-size="14">No repository-level information is published.</text>
+</svg>
