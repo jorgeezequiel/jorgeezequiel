@@ -326,7 +326,7 @@ def updated_readme(current: str, totals, repo_count: int) -> str:
         raise RuntimeError("README stats markers are out of order.")
     replacement = (
         "\n\n"
-        "![Premium static language breakdown with percentages and repository count](assets/language-breakdown.svg)"
+        "![Language breakdown with percentages and repository count](assets/language-breakdown.svg)"
         "\n"
     )
     return current[:start] + replacement + current[end:]
@@ -388,7 +388,7 @@ def main():
         if not repositories or not totals:
             raise RuntimeError("No eligible repositories or language data; preserving previous outputs.")
         publish_outputs(totals, len(repositories))
-        print(f"Updated aggregate language stats for {len(repositories)} eligible public repositories.")
+        print(f"Updated aggregate language stats for {len(repositories)} eligible repositories.")
     except (OSError, urllib.error.URLError, urllib.error.HTTPError, RuntimeError, ValueError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         sys.exit(1)
