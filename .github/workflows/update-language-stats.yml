@@ -36,7 +36,7 @@ jobs:
       - name: Generate and validate aggregate stats
         env:
           GITHUB_OWNER: jorgeezequiel
-          GITHUB_TOKEN: \${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/update_language_stats.py
 
       - name: Commit updated public aggregate artifacts
@@ -51,4 +51,4 @@ jobs:
           git commit -m "chore: update public language statistics"
           git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" push
         env:
-          GITHUB_TOKEN: \${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
