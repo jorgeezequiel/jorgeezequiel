@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Generate privacy-conscious, aggregate language stats for the profile README.
 
-Only public, owned, non-fork, non-archived software repositories are queried.
-No repository names, URLs, descriptions, or per-repository data are published.
-Outputs are staged and validated before replacing the current README and GIF.
+Eligible public repositories and explicitly authorized private repositories are
+aggregated. No repository names, URLs, descriptions, or per-repository data are
+published. Outputs are staged and validated before replacing the README and GIF.
 """
 from __future__ import annotations
 
@@ -20,7 +20,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 OWNER = os.environ.get("GITHUB_OWNER", "jorgeezequiel")
-TOKEN = os.environ.get("GITHUB_TOKEN", "")
+PUBLIC_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+PRIVATE_REPOS_TOKEN = os.environ.get("PRIVATE_REPOS_TOKEN", "")
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 ASSETS = ROOT / "assets"
@@ -44,22 +45,29 @@ PAGE_SIZE = 100
 MAX_PAGES = 10
 
 
-def request_json(url: str):
+def request_json(url: str, token: str = ""):
     headers = {
         "Accept": "application/vnd.github+json",
         "User-Agent": "profile-language-stats/2.0",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    if TOKEN:
-        headers["Authorization"] = f"Bearer {TOKEN}"
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, timeout=25) as response:
-        if response.status != 200:
-            raise RuntimeError(f"Unexpected HTTP status {response.status}")
-        return json.load(response)
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response:
+            if response.status != 200:
+                raise RuntimeError("GitHub returned an unexpected HTTP status.")
+            return json.load(response)
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
+        # Do not print the URL or raw exception: private repository names can be
+        # present in API URLs and must never appear in public Actions logs.
+        raise RuntimeError(
+            "GitHub API request failed; response details suppressed for privacy."
+        ) from None
 
 
-def is_eligible(repo: dict) -> bool:
+def is_eligible(repo: dict, allow_private: bool = False) -> bool:
     name = str(repo.get("name") or "").lower()
     name_parts = set(name.replace("_", "-").replace(".", "-").split("-"))
     owner = str((repo.get("owner") or {}).get("login") or "").lower()
@@ -67,7 +75,10 @@ def is_eligible(repo: dict) -> bool:
     description = str(repo.get("description") or "").lower()
     return (
         owner == OWNER.lower()
-        and repo.get("private") is False
+        and (
+            repo.get("private") is False
+            or (allow_private and repo.get("private") is True)
+        )
         and not repo.get("archived", False)
         and not repo.get("fork", False)
         and name not in EXCLUDED_REPOS
@@ -82,20 +93,45 @@ def is_eligible(repo: dict) -> bool:
     )
 
 
-def eligible_repositories():
+def collect_repository_pages(url_template: str, token: str):
     repositories = []
     for page in range(1, MAX_PAGES + 1):
-        url = (
-            f"https://api.github.com/users/{urllib.parse.quote(OWNER)}"
-            f"/repos?type=public&per_page={PAGE_SIZE}&page={page}&sort=updated"
-        )
-        batch = request_json(url)
+        batch = request_json(url_template.format(page=page), token)
         if not isinstance(batch, list):
             raise RuntimeError("GitHub returned an unexpected repository list.")
         repositories.extend(batch)
         if len(batch) < PAGE_SIZE:
-            return [repo for repo in repositories if is_eligible(repo)]
+            return repositories
     raise RuntimeError("Repository listing exceeded 1,000 entries; refusing partial totals.")
+
+
+def eligible_repositories():
+    if not PRIVATE_REPOS_TOKEN:
+        raise RuntimeError(
+            "PRIVATE_REPOS_TOKEN is not configured; preserving previous outputs."
+        )
+
+    public_url = (
+        f"https://api.github.com/users/{urllib.parse.quote(OWNER)}"
+        f"/repos?type=public&per_page={PAGE_SIZE}&page={{page}}&sort=updated"
+    )
+    private_url = (
+        "https://api.github.com/user/repos?visibility=private&affiliation=owner"
+        f"&per_page={PAGE_SIZE}&page={{page}}&sort=updated"
+    )
+
+    public_repositories = collect_repository_pages(public_url, PUBLIC_TOKEN)
+    # A fine-grained token can see only the private repositories explicitly
+    # selected by the owner. Never log or publish the returned repository list.
+    private_repositories = collect_repository_pages(private_url, PRIVATE_REPOS_TOKEN)
+
+    eligible_public = [
+        repo for repo in public_repositories if is_eligible(repo)
+    ]
+    eligible_private = [
+        repo for repo in private_repositories if is_eligible(repo, allow_private=True)
+    ]
+    return eligible_public + eligible_private
 
 
 def language_totals(repositories):
@@ -105,7 +141,8 @@ def language_totals(repositories):
         if not full_name:
             raise RuntimeError("Repository record missing full_name.")
         url = f"https://api.github.com/repos/{urllib.parse.quote(full_name, safe='/')}/languages"
-        data = request_json(url)
+        token = PRIVATE_REPOS_TOKEN if repo.get("private") is True else PUBLIC_TOKEN
+        data = request_json(url, token)
         if not isinstance(data, dict):
             raise RuntimeError("GitHub returned an unexpected languages response.")
         totals.update({
@@ -151,7 +188,7 @@ def render_gif(totals, output_path: Path):
         image = Image.new("RGB", (width, height), (15, 23, 42))
         draw = ImageDraw.Draw(image)
         draw.text((38, 28), "Programming Languages", font=title_font, fill=(248, 250, 252))
-        draw.text((40, 70), "Aggregate · public software repositories only",
+        draw.text((40, 70), "Aggregate · eligible public and authorized private repositories",
                   font=small_font, fill=(148, 163, 184))
         # A visible build-in animation fills the language bar over each loop.
         x, y, bar_width, bar_height = 40, 132, 880, 30
@@ -179,7 +216,7 @@ def render_gif(totals, output_path: Path):
             draw.text((68, row_y), name, font=body_font, fill=(226, 232, 240))
             draw.text((880, row_y), f"{value / total_bytes * 100:.1f}%",
                       font=body_font, fill=(226, 232, 240), anchor="ra")
-        draw.text((40, 390), "Updated by GitHub Actions · repository names are never published",
+        draw.text((40, 390), "Updated by GitHub Actions · repository identities are never published",
                   font=small_font, fill=(148, 163, 184))
         frames.append(image)
 
@@ -205,7 +242,7 @@ def updated_readme(current: str, totals, repo_count: int) -> str:
     total_bytes = sum(totals.values())
     rows = [
         "",
-        f"**Eligible public software repositories:** {repo_count}",
+        f"**Eligible software repositories included:** {repo_count}",
         "",
         "| Language | Share |",
         "|---|---:|",
