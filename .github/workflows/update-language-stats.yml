@@ -9,6 +9,7 @@ on:
       - "README.md"
       - "scripts/update_language_stats.py"
       - "requirements.txt"
+      - "assets/language-icons/**"
       - ".github/workflows/update-language-stats.yml"
   schedule:
     - cron: "17 9 * * *"
@@ -37,6 +38,11 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+
+      - name: Install SVG rendering system dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libcairo2
 
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check -r requirements.txt
