@@ -193,6 +193,7 @@ def updated_readme(current: str, totals, repo_count: int) -> str:
     if end < start:
         raise RuntimeError("README stats markers are out of order.")
 
+    totals = Counter(totals)
     total_bytes = sum(totals.values())
     rows = [
         "",
@@ -230,7 +231,9 @@ def publish_outputs(totals, repo_count: int):
     staged_readme = None
     old_gif = GIF.read_bytes() if GIF.exists() else None
     try:
-        staged_gif = Path(tempfile.mkstemp(dir=ASSETS, prefix=".language-stats-", suffix=".gif")[1])
+        staged_fd, staged_name = tempfile.mkstemp(dir=ASSETS, prefix=".language-stats-", suffix=".gif")
+        os.close(staged_fd)
+        staged_gif = Path(staged_name)
         render_gif(totals, staged_gif)
         # Stage and validate both artifacts before changing either tracked output.
         staged_readme = write_temp(ROOT, ".md", new_readme)
