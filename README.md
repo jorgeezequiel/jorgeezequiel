@@ -37,7 +37,7 @@ Ferramenta reutilizável para validar e sincronizar arquivos de localização, r
   <tr>
     <td width="140" align="center" valign="middle">
       <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
-        <img src="assets/questlog-icon.png" width="112" alt="Official QuestLog app icon" />
+        <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png" width="112" alt="Official QuestLog app icon" />
       </a>
     </td>
     <td valign="middle">
