@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="170" viewBox="0 0 900 170" role="img" aria-labelledby="title desc">
+  <title id="title">Jorge Ezequiel</title>
+  <desc id="desc">Jorge Ezequiel in a slowly shifting blue, violet, and teal gradient with a subtle wave motion.</desc>
+  <defs>
+    <linearGradient id="nameGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8">
+        <animate attributeName="stop-color" values="#38bdf8;#818cf8;#2dd4bf;#38bdf8" dur="9s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#818cf8">
+        <animate attributeName="stop-color" values="#818cf8;#2dd4bf;#38bdf8;#818cf8" dur="9s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#2dd4bf">
+        <animate attributeName="stop-color" values="#2dd4bf;#38bdf8;#818cf8;#2dd4bf" dur="9s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="170" fill="none"/>
+  <text x="450" y="98" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="64" font-weight="750" letter-spacing="-1.5" fill="url(#nameGradient)">
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 1;0 0" dur="4s" repeatCount="indefinite"/>
+    Jorge Ezequiel
+  </text>
+</svg>
