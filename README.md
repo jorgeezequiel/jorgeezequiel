@@ -20,6 +20,7 @@
     </a>
   </p>
 
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=700&color=5EEAD4&center=true&vCenter=true&width=760&height=55&lines=Software+Developer;Building+offline-first+tools;Open+source+%7C+Privacy-minded+%7C+Practical;Desenvolvedor+de+software+%7C+Ferramentas+offline" alt="Animated typing introduction" />
   <p>
     <img src="https://img.shields.io/badge/Focus-Offline--first-0f766e?style=for-the-badge" alt="Offline-first focus" />
     <img src="https://img.shields.io/badge/Open%20Source-Yes-4f46e5?style=for-the-badge" alt="Open source" />
