@@ -1,23 +1,31 @@
 <!-- Animated profile header -->
 <div align="center">
-  <img src="assets/jorge-ezequiel-animated.gif?v=2" width="900" alt="Jorge Ezequiel — animated gradient name banner" />
+  <img src="assets/jorge-ezequiel-animated.gif?v=3" width="900" alt="Jorge Ezequiel — animated gradient name banner" />
 
   <p>
-    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-    <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
-    <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
-    <img src="https://img.shields.io/badge/GDScript-478CBF?style=for-the-badge&logo=godotengine&logoColor=white" alt="GDScript" />
-    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" />
+    <a href="https://www.python.org/doc/" title="Documentação oficial do Python">
+      <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+    </a>
+    <a href="https://dart.dev/guides" title="Documentação oficial do Dart">
+      <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+    </a>
+    <a href="https://kotlinlang.org/docs/home.html" title="Documentação oficial do Kotlin">
+      <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+    </a>
+    <a href="https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/index.html" title="Documentação oficial do GDScript">
+      <img src="https://img.shields.io/badge/GDScript-478CBF?style=for-the-badge&logo=godotengine&logoColor=white" alt="GDScript" />
+    </a>
+    <a href="https://dev.java/learn/" title="Documentação oficial de Java">
+      <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" />
+    </a>
   </p>
 
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=700&color=5EEAD4&center=true&vCenter=true&width=760&height=55&lines=Software+Developer;Building+offline-first+tools;Open+source+%7C+Privacy-minded+%7C+Practical;Desenvolvedor+de+software+%7C+Ferramentas+offline" alt="Animated typing introduction" />
   <p>
     <img src="https://img.shields.io/badge/Focus-Offline--first-0f766e?style=for-the-badge" alt="Offline-first focus" />
     <img src="https://img.shields.io/badge/Open%20Source-Yes-4f46e5?style=for-the-badge" alt="Open source" />
     <img src="https://img.shields.io/badge/Privacy-Minded-334155?style=for-the-badge" alt="Privacy minded" />
   </p>
 </div>
-
 ---
 
 ## About me · Sobre mim
