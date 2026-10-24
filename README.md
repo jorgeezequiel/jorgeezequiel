@@ -1,26 +1,41 @@
-# Jorge Ezequiel
+<!-- Animated profile header -->
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,45:312E81,100:0D9488&height=190&section=header&text=Jorge%20Ezequiel&fontSize=44&fontColor=F8FAFC&fontAlignY=36&animation=fadeIn" width="100%" alt="Animated header for Jorge Ezequiel" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=2800&pause=700&color=5EEAD4&center=true&vCenter=true&width=760&height=55&lines=Software+Developer;Building+offline-first+tools;Open+source+%7C+Privacy-minded+%7C+Practical;Desenvolvedor+de+software+%7C+Ferramentas+offline" alt="Animated typing introduction" />
+  <p>
+    <img src="https://img.shields.io/badge/Focus-Offline--first-0f766e?style=for-the-badge" alt="Offline-first focus" />
+    <img src="https://img.shields.io/badge/Open%20Source-Yes-4f46e5?style=for-the-badge" alt="Open source" />
+    <img src="https://img.shields.io/badge/Privacy-Minded-334155?style=for-the-badge" alt="Privacy minded" />
+  </p>
+</div>
 
-**Software developer · Open source · Practical tools**
+---
 
-Building useful, maintainable software with a focus on offline-first workflows, privacy, and tools that solve real problems.
+## About me · Sobre mim
 
-Desenvolvedor de software com foco em ferramentas úteis e fáceis de manter, fluxos offline-first, privacidade e soluções para problemas reais.
+I build practical software that solves real problems, with a focus on maintainability, privacy, and offline-first workflows.
+
+Desenvolvo software prático para resolver problemas reais, com foco em manutenção simples, privacidade e funcionamento offline.
 
 ## Featured project · Projeto em destaque
 
-### [Poliglota](https://github.com/jorgeezequiel/poliglota)
+<div align="center">
+  <a href="https://github.com/jorgeezequiel/poliglota">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=jorgeezequiel&repo=poliglota&theme=transparent&hide_border=true&description_lines_count=3" width="420" alt="Poliglota repository card" />
+  </a>
+</div>
 
-**Offline localization toolkit · Ferramenta offline para localização**
+**[Poliglota — Offline localization toolkit](https://github.com/jorgeezequiel/poliglota)**
 
-A reusable toolkit for validating and synchronizing localization files, designed to reduce repetitive translation work and support offline translation engines.
+A reusable tool for validating and synchronizing localization files, helping reduce repetitive translation work and supporting offline translation engines.
 
-Ferramenta reutilizável para validar e sincronizar arquivos de localização, reduzir trabalho repetitivo de tradução e permitir motores de tradução offline.
+Ferramenta reutilizável para validar e sincronizar arquivos de localização, reduzir trabalho repetitivo e dar suporte a motores de tradução offline.
 
 ## Language statistics · Estatísticas de linguagens
 
-The animated chart and table summarize language data from eligible **public software repositories only**. Private repositories, repository names, URLs, descriptions, and per-repository data are never published.
+These animated statistics summarize language data from eligible **public software repositories only**. Private repositories, repository names, URLs, descriptions, and per-repository data are never published.
 
-O gráfico animado e a tabela resumem dados de linguagens apenas de **repositórios públicos de software elegíveis**. Repositórios privados, nomes, URLs, descrições e dados individuais de repositórios nunca são publicados.
+Estas estatísticas animadas resumem dados de linguagens apenas de **repositórios públicos de software elegíveis**. Repositórios privados, nomes, URLs, descrições e dados individuais nunca são publicados.
 
 ![Language statistics preview](assets/language-stats.svg)
 
@@ -32,4 +47,12 @@ As estatísticas aparecerão após a primeira execução bem-sucedida do workflo
 
 <!-- PROFILE-STATS:END -->
 
-<sub>Updated daily by GitHub Actions · Atualizado diariamente pelo GitHub Actions. Manual execution is also available · Também pode ser executado manualmente.</sub>
+<div align="center">
+  <sub>Updated daily by GitHub Actions · Atualizado diariamente pelo GitHub Actions · Manual run available · Execução manual disponível</sub>
+</div>
+
+---
+
+<div align="center">
+  <img src="https://komarev.com/ghpvc/?username=jorgeezequiel&style=flat-square&color=0d9488&label=Profile+views" alt="Profile views" />
+</div>
