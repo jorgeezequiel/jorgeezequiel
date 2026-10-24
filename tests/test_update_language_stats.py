@@ -31,6 +31,8 @@ class EligibilityTests(unittest.TestCase):
     def test_rejects_privacy_and_documentation_repositories(self):
         self.assertFalse(stats.is_eligible({**self.base, "name": "privacy-policy-site"}))
         self.assertFalse(stats.is_eligible({**self.base, "topics": ["documentation-only"]}))
+        self.assertFalse(stats.is_eligible({**self.base, "name": "sample_docs"}))
+        self.assertFalse(stats.is_eligible({**self.base, "topics": ["docs"]}))
         self.assertFalse(stats.is_eligible({**self.base, "description": "Privacy policy website"}))
 
     def test_rejects_other_owners(self):
