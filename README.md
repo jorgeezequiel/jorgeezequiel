@@ -65,10 +65,10 @@ Estas estatísticas animadas agregam dados de linguagens de repositórios públi
 
 | Language | Share |
 |---|---:|
-| Dart | 72.5% |
+| Dart | 72.4% |
 | Ruby | 8.5% |
 | HTML | 5.7% |
-| Python | 5.5% |
+| Python | 5.7% |
 | GDScript | 5.5% |
 | Kotlin | 0.9% |
 | Lua | 0.5% |
