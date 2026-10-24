@@ -38,7 +38,7 @@ EXCLUDED_NAME_WORDS = (
     "documentation", "docs-only", "docs_only", "wiki",
 )
 EXCLUDED_TOPICS = {
-    "privacy-policy", "privacy", "documentation-only", "documentation",
+    "privacy-policy", "privacy", "documentation-only", "documentation", "docs", "docs-only",
 }
 PAGE_SIZE = 100
 MAX_PAGES = 10
@@ -61,6 +61,7 @@ def request_json(url: str):
 
 def is_eligible(repo: dict) -> bool:
     name = str(repo.get("name") or "").lower()
+    name_parts = set(name.replace("_", "-").replace(".", "-").split("-"))
     owner = str((repo.get("owner") or {}).get("login") or "").lower()
     topics = {str(topic).lower() for topic in (repo.get("topics") or [])}
     description = str(repo.get("description") or "").lower()
@@ -71,8 +72,11 @@ def is_eligible(repo: dict) -> bool:
         and not repo.get("fork", False)
         and name not in EXCLUDED_REPOS
         and not any(word in name for word in EXCLUDED_NAME_WORDS)
+        and not name_parts.intersection({"docs", "documentation", "wiki"})
         and not topics.intersection(EXCLUDED_TOPICS)
         and "documentation-only" not in description
+        and "documentation site" not in description
+        and "documentation website" not in description
         and "privacy policy" not in description
         and "política de privacidade" not in description
     )
