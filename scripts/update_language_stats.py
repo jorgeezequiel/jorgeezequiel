@@ -268,6 +268,55 @@ def render_gif(totals, output_path: Path):
             raise RuntimeError("Generated chart is not a valid animated GIF.")
 
 
+def render_summary_svg(totals, repo_count: int) -> bytes:
+    """Create a static, premium-styled language breakdown card for the README."""
+    from html import escape
+
+    palette = ["#38bdf8", "#818cf8", "#2dd4bf", "#fbbf24", "#f472b6",
+               "#a78bfa", "#4ade80", "#94a3b8", "#fb7185", "#c084fc"]
+    total_bytes = sum(totals.values())
+    ranked = totals.most_common(10)
+    if total_bytes <= 0 or not ranked:
+        raise RuntimeError("Cannot render language summary without positive totals.")
+
+    width = 960
+    row_height = 36
+    height = 150 + len(ranked) * row_height + 42
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
+        '<title id="title">Programming language breakdown</title>',
+        '<desc id="desc">Static language shares from aggregate repository data. No repository names are shown.</desc>',
+        '<defs><linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111c32"/><stop offset="1" stop-color="#0b1222"/></linearGradient></defs>',
+        f'<rect x="1" y="1" width="{width-2}" height="{height-2}" rx="24" fill="url(#panel)" stroke="#263852" stroke-width="2"/>',
+        '<text x="36" y="42" fill="#5eead4" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2">LANGUAGE BREAKDOWN</text>',
+        '<text x="36" y="76" fill="#f1f5f9" font-family="Arial,sans-serif" font-size="27" font-weight="700">Your coding footprint</text>',
+        f'<rect x="700" y="28" width="220" height="38" rx="19" fill="#10263a" stroke="#25445c"/>',
+        '<circle cx="720" cy="47" r="5" fill="#2dd4bf"/>',
+        f'<text x="735" y="52" fill="#cbd5e1" font-family="Arial,sans-serif" font-size="13">{repo_count} eligible repositories</text>',
+        '<text x="36" y="105" fill="#94a3b8" font-family="Arial,sans-serif" font-size="13">Share of language bytes across the selected repositories</text>',
+    ]
+    y0 = 132
+    for i, (name, value) in enumerate(ranked):
+        y = y0 + i * row_height
+        color = palette[i % len(palette)]
+        pct = value / total_bytes * 100
+        label = escape(str(name))
+        parts.extend([
+            f'<circle cx="43" cy="{y+9}" r="5" fill="{color}"/>',
+            f'<text x="60" y="{y+14}" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="15">{label}</text>',
+            f'<text x="918" y="{y+14}" text-anchor="end" fill="#f8fafc" font-family="Arial,sans-serif" font-size="15" font-weight="700">{pct:.1f}%</text>',
+            f'<rect x="60" y="{y+21}" width="858" height="5" rx="2.5" fill="#263449"/>',
+            f'<rect x="60" y="{y+21}" width="{max(2, 858*pct/100):.2f}" height="5" rx="2.5" fill="{color}"/>',
+        ])
+    footer_y = y0 + len(ranked) * row_height + 8
+    parts.extend([
+        f'<line x1="36" y1="{footer_y}" x2="924" y2="{footer_y}" stroke="#263852"/>',
+        f'<text x="36" y="{footer_y+24}" fill="#64748b" font-family="Arial,sans-serif" font-size="11" letter-spacing="1">STATIC SUMMARY · AGGREGATE DATA ONLY</text>',
+        '</svg>',
+    ])
+    return ("\n".join(parts) + "\n").encode("utf-8")
+
+
 def updated_readme(current: str, totals, repo_count: int) -> str:
     if current.count(START) != 1 or current.count(END) != 1:
         raise RuntimeError("README must contain exactly one pair of stats markers.")
@@ -275,29 +324,12 @@ def updated_readme(current: str, totals, repo_count: int) -> str:
     end = current.index(END)
     if end < start:
         raise RuntimeError("README stats markers are out of order.")
-
-    totals = Counter(totals)
-    total_bytes = sum(totals.values())
-    rows = [
-        "",
-        f"**Eligible software repositories included:** {repo_count}",
-        "",
-        "| Language | Share |",
-        "|---|---:|",
-    ]
-    for name, value in totals.most_common(10):
-        rows.append(f"| {name} | {value / total_bytes * 100:.1f}% |")
-    replacement = "\n" + "\n".join(rows) + "\n"
-    result = current[:start] + replacement + current[end:]
-    result = result.replace(
-        "![Language statistics preview](assets/language-stats.svg)",
-        "![Animated language statistics from eligible public repositories](assets/language-stats.gif)",
+    replacement = (
+        "\n\n"
+        "![Premium static language breakdown with percentages and repository count](assets/language-breakdown.svg)"
+        "\n"
     )
-    result = result.replace(
-        "![Prévia das estatísticas de linguagens](assets/language-stats.svg)",
-        "![Estatísticas animadas de linguagens dos repositórios públicos elegíveis](assets/language-stats.gif)",
-    )
-    return result
+    return current[:start] + replacement + current[end:]
 
 
 def write_temp(directory: Path, suffix: str, content: bytes) -> Path:
@@ -310,19 +342,25 @@ def write_temp(directory: Path, suffix: str, content: bytes) -> Path:
 def publish_outputs(totals, repo_count: int):
     current_readme = README.read_bytes()
     new_readme = updated_readme(current_readme.decode("utf-8"), totals, repo_count).encode("utf-8")
+    new_summary = render_summary_svg(totals, repo_count)
     staged_gif = None
     staged_readme = None
+    staged_svg = None
     old_gif = GIF.read_bytes() if GIF.exists() else None
+    old_svg = SVG.read_bytes() if SVG.exists() else None
     try:
         staged_fd, staged_name = tempfile.mkstemp(dir=ASSETS, prefix=".language-stats-", suffix=".gif")
         os.close(staged_fd)
         staged_gif = Path(staged_name)
         render_gif(totals, staged_gif)
-        # Stage and validate both artifacts before changing either tracked output.
         staged_readme = write_temp(ROOT, ".md", new_readme)
+        staged_svg = write_temp(ASSETS, ".svg", new_summary)
         if not staged_gif.is_file() or staged_gif.stat().st_size < 100:
             raise RuntimeError("Staged GIF failed validation.")
+        if b"<svg" not in staged_svg.read_bytes() or b"</svg>" not in staged_svg.read_bytes():
+            raise RuntimeError("Staged language summary SVG failed validation.")
         os.replace(staged_gif, GIF)
+        os.replace(staged_svg, SVG)
         try:
             os.replace(staged_readme, README)
         except Exception:
@@ -331,9 +369,14 @@ def publish_outputs(totals, repo_count: int):
             else:
                 rollback = write_temp(ASSETS, ".gif", old_gif)
                 os.replace(rollback, GIF)
+            if old_svg is None:
+                SVG.unlink(missing_ok=True)
+            else:
+                rollback = write_temp(ASSETS, ".svg", old_svg)
+                os.replace(rollback, SVG)
             raise
     finally:
-        for path in (staged_gif, staged_readme):
+        for path in (staged_gif, staged_readme, staged_svg):
             if path and path.exists():
                 path.unlink()
 
