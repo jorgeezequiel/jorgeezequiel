@@ -20,9 +20,36 @@ class EligibilityTests(unittest.TestCase):
     def test_accepts_owned_public_software_repository(self):
         self.assertTrue(stats.is_eligible(self.base))
 
-    def test_rejects_private_repository(self):
+    def test_rejects_private_repository_by_default(self):
         repo = {**self.base, "private": True}
         self.assertFalse(stats.is_eligible(repo))
+
+    def test_accepts_private_repository_only_when_explicitly_enabled(self):
+        repo = {**self.base, "private": True}
+        self.assertTrue(stats.is_eligible(repo, allow_private=True))
+        self.assertFalse(
+            stats.is_eligible({**repo, "name": "privacy-policy-site"}, allow_private=True)
+        )
+
+    def test_private_token_is_required_before_collecting_repositories(self):
+        with patch.object(stats, "PRIVATE_REPOS_TOKEN", ""), \
+             patch.object(stats, "collect_repository_pages") as collect:
+            with self.assertRaisesRegex(RuntimeError, "PRIVATE_REPOS_TOKEN"):
+                stats.eligible_repositories()
+            collect.assert_not_called()
+
+    def test_language_totals_use_private_token_only_for_private_repositories(self):
+        repositories = [
+            {**self.base, "private": False},
+            {**self.base, "name": "private-sample", "private": True},
+        ]
+        with patch.object(stats, "PUBLIC_TOKEN", "public-token"), \
+             patch.object(stats, "PRIVATE_REPOS_TOKEN", "private-token"), \
+             patch.object(stats, "request_json", side_effect=[{"Python": 10}, {"Dart": 20}]) as request:
+            totals = stats.language_totals(repositories)
+        self.assertEqual(totals, {"Python": 10, "Dart": 20})
+        self.assertEqual(request.call_args_list[0].args[1], "public-token")
+        self.assertEqual(request.call_args_list[1].args[1], "private-token")
 
     def test_rejects_archived_and_forked_repositories(self):
         self.assertFalse(stats.is_eligible({**self.base, "archived": True}))
@@ -46,7 +73,7 @@ class ReadmeTests(unittest.TestCase):
             + stats.START + "\nplaceholder\n" + stats.END + "\n"
         )
         result = stats.updated_readme(current, {"Python": 75, "Dart": 25}, 2)
-        self.assertIn("Eligible public software repositories:** 2", result)
+        self.assertIn("Eligible software repositories included:** 2", result)
         self.assertIn("| Python | 75.0% |", result)
         self.assertIn("| Dart | 25.0% |", result)
         self.assertIn("assets/language-stats.gif", result)
