@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 ASSETS = ROOT / "assets"
 GIF = ASSETS / "language-stats.gif"
-SVG = ASSETS / "language-breakdown.svg"
+SVG = ASSETS / "language-stats.svg"
 START = "<!-- PROFILE-STATS:START -->"
 END = "<!-- PROFILE-STATS:END -->"
 EXCLUDED_REPOS = {
@@ -326,7 +326,7 @@ def updated_readme(current: str, totals, repo_count: int) -> str:
         raise RuntimeError("README stats markers are out of order.")
     replacement = (
         "\n\n"
-        "![Language breakdown with percentages and repository count](assets/language-breakdown.svg)"
+        "![Language breakdown with percentages and repository count](assets/language-stats.svg)"
         "\n"
     )
     return current[:start] + replacement + current[end:]
