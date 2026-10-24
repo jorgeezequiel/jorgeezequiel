@@ -33,23 +33,15 @@ Ferramenta reutilizável para validar e sincronizar arquivos de localização, r
 
 ## Published app · Aplicativo publicado
 
-<table>
-  <tr>
-    <td width="140" align="center" valign="middle">
-      <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
-        <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png" width="112" alt="Official QuestLog app icon" />
-      </a>
-    </td>
-    <td valign="middle">
-      <h3><a href="https://play.google.com/store/apps/details?id=com.questlog.finance">QuestLog — Personal finance</a></h3>
-      A personal finance app available on Google Play.
+[![Ícone oficial do QuestLog](https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png?v=9e7a0e785f7897469ba1a6a2d28f6f18939492c8)](https://play.google.com/store/apps/details?id=com.questlog.finance)
 
-      Aplicativo de finanças pessoais disponível na Google Play.
+### [QuestLog — Personal finance](https://play.google.com/store/apps/details?id=com.questlog.finance)
 
-      <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">View on Google Play · Ver na Google Play</a>
-    </td>
-  </tr>
-</table>
+A personal finance app available on Google Play.
+
+Aplicativo de finanças pessoais disponível na Google Play.
+
+[View on Google Play · Ver na Google Play](https://play.google.com/store/apps/details?id=com.questlog.finance)
 
 ## Language statistics · Estatísticas de linguagens
 
