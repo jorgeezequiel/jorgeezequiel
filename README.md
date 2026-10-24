@@ -31,6 +31,26 @@ A reusable tool for validating and synchronizing localization files, helping red
 
 Ferramenta reutilizável para validar e sincronizar arquivos de localização, reduzir trabalho repetitivo e dar suporte a motores de tradução offline.
 
+## Published app · Aplicativo publicado
+
+<table>
+  <tr>
+    <td width="140" align="center" valign="middle">
+      <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
+        <img src="assets/questlog-icon.png" width="112" alt="Official QuestLog app icon" />
+      </a>
+    </td>
+    <td valign="middle">
+      <h3><a href="https://play.google.com/store/apps/details?id=com.questlog.finance">QuestLog — Personal finance</a></h3>
+      A personal finance app available on Google Play.
+
+      Aplicativo de finanças pessoais disponível na Google Play.
+
+      <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">View on Google Play · Ver na Google Play</a>
+    </td>
+  </tr>
+</table>
+
 ## Language statistics · Estatísticas de linguagens
 
 These animated statistics aggregate language data from eligible public repositories and explicitly authorized private repositories. Repository names, URLs, descriptions, and per-repository data are never published.
