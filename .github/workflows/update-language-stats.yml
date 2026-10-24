@@ -45,6 +45,7 @@ jobs:
         env:
           GITHUB_OWNER: jorgeezequiel
           GITHUB_TOKEN: ${{ github.token }}
+          PRIVATE_REPOS_TOKEN: ${{ secrets.PRIVATE_REPOS_TOKEN }}
         run: python scripts/update_language_stats.py
 
       - name: Commit updated public aggregate artifacts
