@@ -167,63 +167,101 @@ def load_font(size: int, bold: bool = False):
 
 
 def render_gif(totals, output_path: Path):
+    """Render a premium dark dashboard with animated donut and language bars."""
+    from math import cos, pi, sin
+
     palette = [
-        (99, 102, 241), (20, 184, 166), (245, 158, 11), (236, 72, 153),
-        (139, 92, 246), (34, 197, 94), (239, 68, 68), (148, 163, 184),
+        (56, 189, 248), (129, 140, 248), (45, 212, 191), (251, 191, 36),
+        (244, 114, 182), (167, 139, 250), (74, 222, 128), (148, 163, 184),
     ]
-    ranked = totals.most_common(7)
-    remainder = sum(value for _, value in totals.most_common()[7:])
+    ranked = totals.most_common(6)
+    remainder = sum(value for _, value in totals.most_common()[6:])
     if remainder:
         ranked.append(("Other", remainder))
     total_bytes = sum(totals.values())
     if not ranked or total_bytes <= 0:
         raise RuntimeError("Cannot render a chart without positive language totals.")
 
+    width, height = 1000, 520
+    title_font = load_font(30, True)
+    heading_font = load_font(19, True)
+    body_font = load_font(17)
+    small_font = load_font(13)
+    tiny_font = load_font(12)
     frames = []
-    width, height = 960, 420
-    title_font = load_font(28, True)
-    body_font = load_font(18)
-    small_font = load_font(14)
-    for frame in range(12):
-        image = Image.new("RGB", (width, height), (15, 23, 42))
+
+    for frame in range(24):
+        image = Image.new("RGB", (width, height), (7, 13, 27))
         draw = ImageDraw.Draw(image)
-        draw.text((38, 28), "Programming Languages", font=title_font, fill=(248, 250, 252))
-        draw.text((40, 70), "Aggregate · eligible public and authorized private repositories",
-                  font=small_font, fill=(148, 163, 184))
-        # A visible build-in animation fills the language bar over each loop.
-        x, y, bar_width, bar_height = 40, 132, 880, 30
-        progress = (frame + 1) / 12
-        filled_width = max(1, round(bar_width * progress))
-        draw.rounded_rectangle((x, y, x + bar_width, y + bar_height), radius=10,
-                               fill=(51, 65, 85))
-        cursor = x
-        for index, (_, value) in enumerate(ranked):
-            segment = round(filled_width * value / total_bytes)
-            if index == len(ranked) - 1:
-                segment = x + filled_width - cursor
-            if segment > 0:
-                draw.rectangle((cursor, y, cursor + segment, y + bar_height),
-                               fill=palette[index % len(palette)])
-                cursor += segment
-        # A bright scanning marker makes the motion noticeable at profile size.
-        marker_x = min(x + filled_width - 5, x + bar_width - 5)
-        draw.rounded_rectangle((marker_x - 3, y - 5, marker_x + 3, y + bar_height + 5),
-                               radius=3, fill=(94, 234, 212))
+        # Layered panels create depth while staying legible on GitHub dark mode.
+        draw.rounded_rectangle((18, 18, 982, 502), radius=26,
+                               fill=(10, 20, 39), outline=(31, 53, 83), width=2)
+        draw.text((48, 42), "LANGUAGE INSIGHTS", font=small_font, fill=(45, 212, 191))
+        draw.text((48, 65), "Your code, at a glance", font=title_font, fill=(241, 245, 249))
+        draw.text((50, 109), "Aggregate language distribution", font=small_font,
+                  fill=(148, 163, 184))
+        draw.rounded_rectangle((765, 48, 944, 84), radius=18,
+                               fill=(15, 36, 57), outline=(42, 75, 105))
+        draw.ellipse((781, 61, 791, 71), fill=(45, 212, 191))
+        draw.text((800, 57), f"{len(totals)} languages", font=small_font,
+                  fill=(203, 213, 225))
+
+        # Donut chart with a small animated highlight orbiting the ring.
+        cx, cy, outer, inner = 205, 286, 100, 67
+        start_angle = -90
         for index, (name, value) in enumerate(ranked):
-            row_y = 184 + index * 27
+            extent = value / total_bytes * 360
+            draw.pieslice((cx - outer, cy - outer, cx + outer, cy + outer),
+                          start=start_angle, end=start_angle + extent,
+                          fill=palette[index % len(palette)])
+            start_angle += extent
+        draw.ellipse((cx - inner, cy - inner, cx + inner, cy + inner), fill=(10, 20, 39))
+        draw.text((cx, cy - 19), f"{ranked[0][1] / total_bytes * 100:.1f}%",
+                  font=heading_font, fill=(248, 250, 252), anchor="mm")
+        draw.text((cx, cy + 10), ranked[0][0], font=small_font,
+                  fill=(148, 163, 184), anchor="mm")
+        angle = frame / 24 * 2 * pi
+        hx = cx + int(cos(angle) * (outer - 1))
+        hy = cy + int(sin(angle) * (outer - 1))
+        draw.ellipse((hx - 7, hy - 7, hx + 7, hy + 7), fill=(248, 250, 252))
+        draw.ellipse((hx - 3, hy - 3, hx + 3, hy + 3), fill=(45, 212, 191))
+
+        # Ranked rows with percent labels and an animated light sweep on each bar.
+        draw.text((370, 160), "LANGUAGE", font=tiny_font, fill=(100, 116, 139))
+        draw.text((930, 160), "SHARE", font=tiny_font, fill=(100, 116, 139), anchor="ra")
+        for index, (name, value) in enumerate(ranked):
+            y = 185 + index * 38
             color = palette[index % len(palette)]
-            draw.ellipse((42, row_y + 4, 56, row_y + 18), fill=color)
-            draw.text((68, row_y), name, font=body_font, fill=(226, 232, 240))
-            draw.text((880, row_y), f"{value / total_bytes * 100:.1f}%",
-                      font=body_font, fill=(226, 232, 240), anchor="ra")
-        draw.text((40, 390), "Updated by GitHub Actions · repository identities are never published",
-                  font=small_font, fill=(148, 163, 184))
+            draw.ellipse((372, y + 4, 384, y + 16), fill=color)
+            draw.text((395, y), name, font=body_font, fill=(226, 232, 240))
+            pct = value / total_bytes * 100
+            draw.text((930, y), f"{pct:.1f}%", font=body_font,
+                      fill=(248, 250, 252), anchor="ra")
+            bx, by, bw, bh = 395, y + 25, 535, 5
+            draw.rounded_rectangle((bx, by, bx + bw, by + bh), radius=3,
+                                   fill=(30, 41, 59))
+            fill_width = max(3, int(bw * pct / 100))
+            draw.rounded_rectangle((bx, by, bx + fill_width, by + bh), radius=3,
+                                   fill=color)
+            # Moving glint stays within each bar and never changes the data.
+            if fill_width > 18:
+                sweep = (frame / 23) * max(1, fill_width - 12)
+                gx = bx + int(sweep)
+                if gx < bx + fill_width:
+                    draw.rounded_rectangle((gx, by - 1, min(gx + 12, bx + fill_width), by + bh + 1),
+                                           radius=2, fill=(241, 245, 249))
+
+        draw.line((48, 458, 952, 458), fill=(31, 53, 83), width=1)
+        draw.text((48, 472), "AUTO-UPDATED  ·  AGGREGATE DATA ONLY",
+                  font=tiny_font, fill=(100, 116, 139))
+        draw.text((952, 470), "No repository names or code published",
+                  font=tiny_font, fill=(148, 163, 184), anchor="ra")
         frames.append(image)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     frames[0].save(
         output_path, format="GIF", save_all=True, append_images=frames[1:],
-        duration=140, loop=0, optimize=True, disposal=2,
+        duration=100, loop=0, optimize=True, disposal=2,
     )
     with Image.open(output_path) as generated:
         if generated.format != "GIF" or getattr(generated, "n_frames", 1) < 2:
