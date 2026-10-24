@@ -33,15 +33,15 @@ Ferramenta reutilizável para validar e sincronizar arquivos de localização, r
 
 ## Language statistics · Estatísticas de linguagens
 
-These animated statistics summarize language data from eligible **public software repositories only**. Private repositories, repository names, URLs, descriptions, and per-repository data are never published.
+These animated statistics aggregate language data from eligible public repositories and explicitly authorized private repositories. Repository names, URLs, descriptions, and per-repository data are never published.
 
-Estas estatísticas animadas resumem dados de linguagens apenas de **repositórios públicos de software elegíveis**. Repositórios privados, nomes, URLs, descrições e dados individuais nunca são publicados.
+Estas estatísticas animadas agregam dados de linguagens de repositórios públicos elegíveis e repositórios privados explicitamente autorizados. Nomes, URLs, descrições e dados individuais dos repositórios nunca são publicados.
 
-![Animated language statistics from eligible public repositories](assets/language-stats.gif)
+![Animated aggregate language statistics from eligible public and authorized private repositories](assets/language-stats.gif)
 
 <!-- PROFILE-STATS:START -->
 
-**Eligible public software repositories:** 2
+**Eligible software repositories included:** 2
 
 | Language | Share |
 |---|---:|
