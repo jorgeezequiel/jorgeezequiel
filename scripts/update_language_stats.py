@@ -153,21 +153,25 @@ def render_gif(totals, output_path: Path):
         draw.text((38, 28), "Programming Languages", font=title_font, fill=(248, 250, 252))
         draw.text((40, 70), "Aggregate · public software repositories only",
                   font=small_font, fill=(148, 163, 184))
-        # A subtle moving marker makes the GIF animated without distracting effects.
-        marker_x = 40 + (frame * 70) % 880
-        draw.ellipse((marker_x, 111, marker_x + 8, 119), fill=(45, 212, 191))
-        x, y, bar_width, bar_height = 40, 132, 880, 28
+        # A visible build-in animation fills the language bar over each loop.
+        x, y, bar_width, bar_height = 40, 132, 880, 30
+        progress = (frame + 1) / 12
+        filled_width = max(1, round(bar_width * progress))
         draw.rounded_rectangle((x, y, x + bar_width, y + bar_height), radius=10,
                                fill=(51, 65, 85))
         cursor = x
         for index, (_, value) in enumerate(ranked):
-            segment = round(bar_width * value / total_bytes)
+            segment = round(filled_width * value / total_bytes)
             if index == len(ranked) - 1:
-                segment = x + bar_width - cursor
+                segment = x + filled_width - cursor
             if segment > 0:
                 draw.rectangle((cursor, y, cursor + segment, y + bar_height),
                                fill=palette[index % len(palette)])
                 cursor += segment
+        # A bright scanning marker makes the motion noticeable at profile size.
+        marker_x = min(x + filled_width - 5, x + bar_width - 5)
+        draw.rounded_rectangle((marker_x - 3, y - 5, marker_x + 3, y + bar_height + 5),
+                               radius=3, fill=(94, 234, 212))
         for index, (name, value) in enumerate(ranked):
             row_y = 184 + index * 27
             color = palette[index % len(palette)]
@@ -182,7 +186,7 @@ def render_gif(totals, output_path: Path):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     frames[0].save(
         output_path, format="GIF", save_all=True, append_images=frames[1:],
-        duration=450, loop=0, optimize=True, disposal=2,
+        duration=140, loop=0, optimize=True, disposal=2,
     )
     with Image.open(output_path) as generated:
         if generated.format != "GIF" or getattr(generated, "n_frames", 1) < 2:
