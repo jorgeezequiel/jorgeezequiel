@@ -50,7 +50,7 @@ jobs:
 
       - name: Commit updated public aggregate artifacts
         run: |
-          if git diff --quiet -- README.md assets/language-stats.gif assets/language-breakdown.svg; then
+          if git diff --quiet -- README.md assets/language-stats.gif assets/language-stats.svg; then
             echo "Statistics are unchanged."
             exit 0
           fi
