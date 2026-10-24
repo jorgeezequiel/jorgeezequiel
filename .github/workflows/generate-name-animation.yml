@@ -43,6 +43,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           git diff --check
+          cp assets/jorge-ezequiel-animated.gif /tmp/jorge-ezequiel-animated.gif
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" fetch origin main
+          git checkout -B main origin/main
+          cp /tmp/jorge-ezequiel-animated.gif assets/jorge-ezequiel-animated.gif
           git add assets/jorge-ezequiel-animated.gif
           if git diff --cached --quiet; then
             echo "Animated banner is unchanged."
