@@ -53,20 +53,7 @@ Estas estatísticas animadas agregam dados de linguagens de repositórios públi
 
 <!-- PROFILE-STATS:START -->
 
-**Eligible software repositories included:** 12
-
-| Language | Share |
-|---|---:|
-| Dart | 72.4% |
-| Ruby | 8.5% |
-| Python | 5.8% |
-| HTML | 5.7% |
-| GDScript | 5.5% |
-| Kotlin | 0.9% |
-| Lua | 0.5% |
-| PowerShell | 0.5% |
-| C++ | 0.1% |
-| Shell | 0.1% |
+![Premium static language breakdown with percentages and repository count](assets/language-breakdown.svg)
 <!-- PROFILE-STATS:END -->
 
 <div align="center">
