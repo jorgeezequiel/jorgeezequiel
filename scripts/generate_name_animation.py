@@ -124,18 +124,7 @@ def render_frame(index: int, name_font, label_font) -> Image.Image:
     draw.text(((WIDTH - label_width) // 2, 42), label, font=label_font,
               fill=(*MUTED, 255))
 
-    # A thin baseline and a moving, soft highlight complete the motion.
-    left, right, baseline_y = 325, 675, 153
-    draw.rounded_rectangle((left, baseline_y, right, baseline_y + 2),
-                           radius=1, fill=(44, 61, 84, 255))
-    travel = (phase * 1.35) % 1.0
-    head_x = left + int(travel * (right - left))
-    for radius, alpha in ((10, 18), (6, 35), (3, 220)):
-        draw.ellipse((head_x - radius, baseline_y - radius + 1,
-                      head_x + radius, baseline_y + radius + 1),
-                     fill=(*TEAL, alpha))
-    draw.ellipse((head_x - 2, baseline_y - 1, head_x + 2, baseline_y + 3),
-                 fill=(245, 250, 255, 255))
+    # The name stays clean: no moving dot or animated underline beneath it.
 
     # Tiny bottom caption anchors the composition without competing with the name.
     caption = "OFFLINE-FIRST  /  PRIVACY-MINDED"
