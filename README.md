@@ -52,8 +52,7 @@ Estas estatísticas animadas agregam dados de linguagens de repositórios públi
 ![Animated aggregate language statistics from eligible public and authorized private repositories](assets/language-stats.gif)
 
 <!-- PROFILE-STATS:START -->
-
-![Language breakdown with percentages and repository count](assets/language-stats.svg)
+<!-- The animated GIF above is the single source of language statistics. -->
 <!-- PROFILE-STATS:END -->
 
 <div align="center">
