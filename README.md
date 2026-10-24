@@ -37,14 +37,15 @@ These animated statistics summarize language data from eligible **public softwar
 
 Estas estatísticas animadas resumem dados de linguagens apenas de **repositórios públicos de software elegíveis**. Repositórios privados, nomes, URLs, descrições e dados individuais nunca são publicados.
 
-![Language statistics preview](assets/language-stats.svg)
+![Animated language statistics from eligible public repositories](assets/language-stats.gif)
 
 <!-- PROFILE-STATS:START -->
 
-Statistics will appear after the first successful workflow run.
+**Eligible public software repositories:** 2
 
-As estatísticas aparecerão após a primeira execução bem-sucedida do workflow.
-
+| Language | Share |
+|---|---:|
+| Python | 100.0% |
 <!-- PROFILE-STATS:END -->
 
 <div align="center">
