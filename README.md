@@ -27,7 +27,7 @@
     <img src="https://img.shields.io/badge/Privacy-Minded-334155?style=for-the-badge" alt="Privacy minded" />
   </p>
 </div>
----
+
 
 ## About me · Sobre mim
 
