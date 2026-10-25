@@ -118,7 +118,7 @@ def render_frame(index: int, name_font, label_font) -> Image.Image:
     image = Image.alpha_composite(image, gradient)
 
     draw = ImageDraw.Draw(image)
-    label = "SOFTWARE DEVELOPER   •   OPEN SOURCE"
+    label = ""
     label_bbox = draw.textbbox((0, 0), label, font=label_font)
     label_width = label_bbox[2] - label_bbox[0]
     draw.text(((WIDTH - label_width) // 2, 42), label, font=label_font,
@@ -127,7 +127,7 @@ def render_frame(index: int, name_font, label_font) -> Image.Image:
     # The name stays clean: no moving dot or animated underline beneath it.
 
     # Tiny bottom caption anchors the composition without competing with the name.
-    caption = "OFFLINE-FIRST  /  PRIVACY-MINDED"
+    caption = ""
     cb = draw.textbbox((0, 0), caption, font=label_font)
     draw.text(((WIDTH - (cb[2] - cb[0])) // 2, 170), caption,
               font=label_font, fill=(103, 123, 150, 255))
