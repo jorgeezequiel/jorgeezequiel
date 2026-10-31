@@ -35,6 +35,22 @@ I build practical software that solves real problems, with a focus on maintainab
 
 Desenvolvo software prático para resolver problemas reais, com foco em manutenção simples, privacidade e funcionamento offline.
 
+## Published app · Aplicativo publicado
+
+<div align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
+    <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png?v=9e7a0e785f7897469ba1a6a2d28f6f18939492c8" width="180" alt="Ícone oficial do QuestLog" />
+  </a>
+
+  ### [QuestLog — Personal finance](https://play.google.com/store/apps/details?id=com.questlog.finance)
+
+  A personal finance app available on Google Play.
+
+  Aplicativo de finanças pessoais disponível na Google Play.
+
+  [View on Google Play · Ver na Google Play](https://play.google.com/store/apps/details?id=com.questlog.finance)
+</div>
+
 ## Featured project · Projeto em destaque
 
 <div align="center">
@@ -52,22 +68,6 @@ Desenvolvo software prático para resolver problemas reais, com foco em manuten�
 A reusable tool for validating and synchronizing localization files, helping reduce repetitive translation work and supporting offline translation engines.
 
 Ferramenta reutilizável para validar e sincronizar arquivos de localização, reduzir trabalho repetitivo e dar suporte a motores de tradução offline.
-
-## Published app · Aplicativo publicado
-
-<div align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
-    <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png?v=9e7a0e785f7897469ba1a6a2d28f6f18939492c8" width="180" alt="Ícone oficial do QuestLog" />
-  </a>
-
-  ### [QuestLog — Personal finance](https://play.google.com/store/apps/details?id=com.questlog.finance)
-
-  A personal finance app available on Google Play.
-
-  Aplicativo de finanças pessoais disponível na Google Play.
-
-  [View on Google Play · Ver na Google Play](https://play.google.com/store/apps/details?id=com.questlog.finance)
-</div>
 
 ## Language statistics · Estatísticas de linguagens
 
