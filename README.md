@@ -39,11 +39,15 @@ Desenvolvo software prático para resolver problemas reais, com foco em manuten�
 
 <div align="center">
   <a href="https://github.com/jorgeezequiel/poliglota">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=jorgeezequiel&repo=poliglota&theme=transparent&hide_border=true&description_lines_count=3" width="420" alt="Poliglota repository card" />
+    <img src="https://raw.githubusercontent.com/jorgeezequiel/poliglota/main/docs/assets/brand/original/poliglota-matte-flat-logo.png" width="480" alt="Poliglota — identidade visual oficial, Matte Flat Logo" />
   </a>
 </div>
 
+<div align="center">
+
 **[Poliglota — Offline localization toolkit](https://github.com/jorgeezequiel/poliglota)**
+
+</div>
 
 A reusable tool for validating and synchronizing localization files, helping reduce repetitive translation work and supporting offline translation engines.
 
