@@ -35,21 +35,30 @@ I build practical software that solves real problems, with a focus on maintainab
 
 Desenvolvo software prático para resolver problemas reais, com foco em manutenção simples, privacidade e funcionamento offline.
 
-## Published app · Aplicativo publicado
+## Published apps · Aplicativos publicados
 
-<div align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
-    <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png?v=9e7a0e785f7897469ba1a6a2d28f6f18939492c8" width="180" alt="Ícone oficial do QuestLog" />
-  </a>
-
-  ### [QuestLog — Personal finance](https://play.google.com/store/apps/details?id=com.questlog.finance)
-
-  A personal finance app available on Google Play.
-
-  Aplicativo de finanças pessoais disponível na Google Play.
-
-  [View on Google Play · Ver na Google Play](https://play.google.com/store/apps/details?id=com.questlog.finance)
-</div>
+<table>
+  <tr>
+    <td align="center" width="50%" valign="top">
+      <a href="https://play.google.com/store/apps/details?id=com.questlog.finance">
+        <img src="https://raw.githubusercontent.com/jorgeezequiel/jorgeezequiel/main/assets/questlog-icon.png?v=9e7a0e785f7897469ba1a6a2d28f6f18939492c8" width="180" alt="Ícone oficial do QuestLog" />
+      </a>
+      <h3><a href="https://play.google.com/store/apps/details?id=com.questlog.finance">QuestLog — Personal finance</a></h3>
+      <p>A personal finance app available on Google Play.</p>
+      <p>Aplicativo de finanças pessoais disponível na Google Play.</p>
+      <p><a href="https://play.google.com/store/apps/details?id=com.questlog.finance">View on Google Play · Ver na Google Play</a></p>
+    </td>
+    <td align="center" width="50%" valign="top">
+      <a href="https://play.google.com/store/apps/details?id=com.jels.pazcall">
+        <img src="https://play-lh.googleusercontent.com/J_itlhFbiZP-TrsIBeNOS5UezKqOztB9qUXKYVX3ra-pG8TRcfJtnMVlZpn__h-YVt3af-sDhiLBLw5FFImw7A=w240-h480" width="180" alt="Ícone oficial do PazCall" />
+      </a>
+      <h3><a href="https://play.google.com/store/apps/details?id=com.jels.pazcall">PazCall — Call blocker</a></h3>
+      <p>An offline-first call blocker to filter unwanted incoming calls.</p>
+      <p>Bloqueador de chamadas indesejadas com funcionamento offline.</p>
+      <p><a href="https://play.google.com/store/apps/details?id=com.jels.pazcall">View on Google Play · Ver na Google Play</a></p>
+    </td>
+  </tr>
+</table>
 
 ## Featured project · Projeto em destaque
 
